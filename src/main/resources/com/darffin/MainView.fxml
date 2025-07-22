@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/24.0.1">
    <children>
       <Label layoutX="54.0" layoutY="80.0" text="card1" />
       <Button layoutX="42.0" layoutY="483.0" mnemonicParsing="false" text="Button" />
