@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/darffin/MainView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/darffin/MainMenu.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Deck Builder");
         stage.setScene(scene);
