@@ -13,14 +13,14 @@ public class MainMenuController {
     @FXML
     private Button close;
     @FXML
-    private Button play;
+    private Button newGame;
 
     @FXML
-    private void playGame() throws IOException {
+    private void newGame() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/Fight.fxml"));
         Parent fight = fxmlLoader.load();
 
-        Stage stage = (Stage) play.getScene().getWindow();
+        Stage stage = (Stage) newGame.getScene().getWindow();
         Scene scene = new Scene(fight);
         stage.setScene(scene);
     }
