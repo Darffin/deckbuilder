@@ -16,10 +16,6 @@ public class Player {
         return player;
     }
 
-    public void decreaseLife(int value){
-        this.life -= value;
-    }
-
     public int getLife() {
         return life;
     }

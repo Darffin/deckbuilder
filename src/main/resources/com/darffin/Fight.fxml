@@ -17,7 +17,7 @@
       </Label>
       <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="20.0" layoutY="555.0" prefHeight="38.0" prefWidth="28.0" text="Draft Deck" textOverrun="WORD_ELLIPSIS" wrapText="true" />
       <Label layoutX="480.0" layoutY="555.0" prefHeight="38.0" prefWidth="29.0" text="Used deck" wrapText="true" />
-      <Label fx:id="deck" layoutX="20.0" layoutY="605.0" text="0 / 6" />
+      <Label fx:id="deck" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="605.0" text="0 / 6" textAlignment="CENTER" />
       <Label fx:id="discardDeck" layoutX="482.0" layoutY="606.0" text="0 / 6" />
       <Label fx:id="playerLife" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="18.0" layoutY="645.0" prefHeight="17.0" prefWidth="28.0" text="Life" textOverrun="WORD_ELLIPSIS" wrapText="true" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="676.0" prefHeight="17.0" prefWidth="24.0" text="0" textAlignment="CENTER" />
