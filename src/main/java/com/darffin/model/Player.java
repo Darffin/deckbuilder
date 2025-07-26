@@ -5,12 +5,13 @@ import java.util.List;
 
 public class Player {
     private int life;
-    private List<Card> deck;
+    private int mana;
     private List<Card> deckPlayer = new ArrayList<Card>();
     private static Player player;
 
     private Player(){
         this.life = 60;
+        this.mana = 3;
     }
 
     public static Player getInstance(){
@@ -26,20 +27,20 @@ public class Player {
         this.life = life;
     }
 
-    public List<Card> getDeck() {
-        return deck;
-    }
-
-    public void setDeck(List<Card> deck) {
-        this.deck = deck;
-    }
-
     public List<Card> getDeckPlayer() {
         return deckPlayer;
     }
 
     public void setDeckPlayer(List<Card> deckPlayer) {
         this.deckPlayer = deckPlayer;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class PlayerService {
 
-    private Player player = Player.getInstance();
+    private final Player player = Player.getInstance();
 
     @Autowired
     private CardService cardService;
@@ -44,6 +44,14 @@ public class PlayerService {
             Collections.shuffle(playerDeck());
             cardService.getDiscardDeck().clear();
         }
+    }
+
+    public int playerMana(){
+        return player.getMana();
+    }
+
+    public void setPlayerMana(int e){
+        this.player.setMana(e);
     }
 
 }

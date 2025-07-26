@@ -2,10 +2,10 @@ package com.darffin.controller;
 
 import com.darffin.model.Card;
 import com.darffin.model.Player;
-import com.darffin.service.CardEffectService;
-import com.darffin.service.CardService;
-import com.darffin.service.EnemyService;
-import com.darffin.service.PlayerService;
+import com.darffin.service.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,12 +13,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.*;
+
 
 @Component
 public class FightController {
@@ -32,6 +36,8 @@ public class FightController {
     private Button card4;
     @FXML
     private Label playerLife;
+    @FXML
+    private Label playerMana;
     @FXML
     private Label enemyLife;
     @FXML
@@ -50,6 +56,9 @@ public class FightController {
 
     @Autowired
     private CardController cardController;
+
+    @Autowired
+    GameService gameService;
 
     @Autowired
     PlayerService playerService;
@@ -72,11 +81,15 @@ public class FightController {
         playerLife.setText(playerService.playerLife()+"");
         enemyName.setText(enemyService.enemyName());
         enemyLife.setText(enemyService.enemyLife()+"");
+        gameService.setMana(playerService.playerMana());
+
+        playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
+
         playerService.setPlayerDeckDefault();
 
         cardController.cardButtonsUpdate(card1,card2,card3,card4);
 
-        updateDecksLabel();
+        updateLabel();
 
     }
 
@@ -85,32 +98,48 @@ public class FightController {
         Card selectedCard = cardController.getCardByName(clickedButton.getText());
         String methodName = selectedCard.getName().trim().replaceAll("\\s+", "");
 
-        try {
-            Method method = CardEffectService.class.getMethod(methodName);
-            method.invoke(cardEffectService);
-            enemyLife.setText(enemyService.enemyLife() + "");
+        if(gameService.getMana() > 0) {
+            try {
+                Method method = CardEffectService.class.getMethod(methodName);
+                method.invoke(cardEffectService);
+                enemyLife.setText(enemyService.enemyLife() + "");
 
-            cardService.addToDiscardDeck(selectedCard);
+                cardService.addToDiscardDeck(selectedCard);
 
-            //playerService.verifyDeckAvailability();
+                gameService.setMana(gameService.getMana() - 1);
+                //playerService.verifyDeckAvailability();
 
-            clickedButton.setText(playerService.playerDeck().get(0).getName());
-            playerService.playerDeck().remove(0);
+                clickedButton.setText(playerService.playerDeck().get(0).getName());
+                playerService.playerDeck().remove(0);
 
-            playerService.verifyDeckAvailability();
+                playerService.verifyDeckAvailability();
 
-            updateDecksLabel();
+                updateLabel();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else notEnoughMana();
 
         //Preciso pegar uma carta do deck e atualizar o botão
     }
 
-    public void updateDecksLabel(){
+    public void updateLabel(){
         deck.setText(playerService.playerDeck().size()+"");
         discardDeck.setText(cardService.getDiscardDeck().size()+"");
+        playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
+    }
+
+    public void notEnoughMana(){
+        Timeline blinkMana = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> playerMana.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(0.25), e -> playerMana.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(0.5),  e -> playerMana.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(0.75), e -> playerMana.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(1),  e -> playerMana.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(1.25), e -> playerMana.setTextFill(Color.BLACK))
+        );
+        blinkMana.play();
     }
 
     public void playerTurn(){
