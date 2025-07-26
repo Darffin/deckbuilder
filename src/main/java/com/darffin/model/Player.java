@@ -1,10 +1,12 @@
 package com.darffin.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private int life;
     private List<Card> deck;
+    private List<Card> deckPlayer = new ArrayList<Card>();
     private static Player player;
 
     private Player(){
@@ -30,6 +32,14 @@ public class Player {
 
     public void setDeck(List<Card> deck) {
         this.deck = deck;
+    }
+
+    public List<Card> getDeckPlayer() {
+        return deckPlayer;
+    }
+
+    public void setDeckPlayer(List<Card> deckPlayer) {
+        this.deckPlayer = deckPlayer;
     }
 
 
