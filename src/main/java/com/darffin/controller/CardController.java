@@ -54,6 +54,18 @@ public class CardController {
         //cardService.addToDiscardDeck(playerService.playerDeck().get(3));
         playerService.playerDeck().remove(3);
 
+    }
+
+    public void cardButtonUnload(Button card){
+        Card selectedCard = getCardByName(card.getText());
+        cardService.addToDiscardDeck(selectedCard);
+        card.setText("");
+
+    }
+
+    public void cardButtonLoad(Button card){
+        card.setText(playerService.playerDeck().get(0).getName());
+        playerService.playerDeck().remove(0);
 
     }
 

@@ -23,4 +23,8 @@ public class EnemyService {
     public int enemyLife(){
         return enemy.getLife();
     }
+
+    public void updateMana(){
+
+    }
 }

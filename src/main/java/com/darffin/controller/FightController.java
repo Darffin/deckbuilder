@@ -128,6 +128,7 @@ public class FightController {
         deck.setText(playerService.playerDeck().size()+"");
         discardDeck.setText(cardService.getDiscardDeck().size()+"");
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
+        playerLife.setText(playerService.playerLife() + "");
     }
 
     public void notEnoughMana(){
@@ -151,7 +152,43 @@ public class FightController {
     }
 
     public void enemyTurn(){
+        Timeline enemyturn = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> endTurn.setDisable(true)),
 
+                new KeyFrame(Duration.seconds(0.25), e -> card1.setDisable(true)),
+                new KeyFrame(Duration.seconds(0.25), e -> { cardController.cardButtonUnload(card1); updateLabel();}),
+                new KeyFrame(Duration.seconds(0.5), e -> card2.setDisable(true)),
+                new KeyFrame(Duration.seconds(0.5), e -> { cardController.cardButtonUnload(card2); updateLabel();}),
+                new KeyFrame(Duration.seconds(0.75), e -> card3.setDisable(true)),
+                new KeyFrame(Duration.seconds(0.75), e -> { cardController.cardButtonUnload(card3); updateLabel();}),
+                new KeyFrame(Duration.seconds(1), e -> card4.setDisable(true)),
+                new KeyFrame(Duration.seconds(1), e -> { cardController.cardButtonUnload(card4); updateLabel();}),
+
+                new KeyFrame(Duration.seconds(1.25), e -> playerService.damagePlayer(10)),
+
+                new KeyFrame(Duration.seconds(1.5), e -> card1.setDisable(false)),
+                new KeyFrame(Duration.seconds(1.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel();}),
+                new KeyFrame(Duration.seconds(1.75), e -> card2.setDisable(false)),
+                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateLabel();}),
+                new KeyFrame(Duration.seconds(2), e -> card3.setDisable(false)),
+                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); updateLabel();}),
+                new KeyFrame(Duration.seconds(2.25), e -> card4.setDisable(false)),
+                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel();}),
+
+                new KeyFrame(Duration.seconds(2.5),  e -> updateMana()),
+                new KeyFrame(Duration.seconds(2.5),  e -> endTurn.setDisable(false))
+
+        );
+        enemyturn.play();
+    }
+
+    public void updateMana(){
+        gameService.reloadMana();
+        playerMana.setText(gameService.getMana()+" / "+playerService.playerMana());
+    }
+
+    public void endTurn(){
+        enemyTurn();
     }
 
 

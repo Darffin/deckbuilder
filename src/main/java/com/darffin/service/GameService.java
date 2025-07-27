@@ -9,6 +9,8 @@ public class GameService {
 
     private int mana;
 
+    private final Player player = Player.getInstance();
+
     public void damageEnemy(int damage) {
         //player.setLife(player.getLife() - damage);
     }
@@ -19,5 +21,9 @@ public class GameService {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public void reloadMana(){
+        this.mana = player.getMana();
     }
 }
