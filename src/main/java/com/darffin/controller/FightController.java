@@ -48,6 +48,10 @@ public class FightController {
     private Label discardDeck;
     @FXML
     private Button endTurn;
+    @FXML
+    private Label enemyIntention;
+    @FXML
+    private Label intentionValue;
 
     private Card card;
 
@@ -81,6 +85,9 @@ public class FightController {
         playerLife.setText(playerService.playerLife()+"");
         enemyName.setText(enemyService.enemyName());
         enemyLife.setText(enemyService.enemyLife()+"");
+        enemyIntention.setText(enemyService.enemyIntention().get(0));
+        intentionValue.setText(enemyService.intentionValue().get(0)+"");
+
         gameService.setMana(playerService.playerMana());
 
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
@@ -129,6 +136,7 @@ public class FightController {
         discardDeck.setText(cardService.getDiscardDeck().size()+"");
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
         playerLife.setText(playerService.playerLife() + "");
+        enemyLife.setText(enemyService.enemyLife() + "");
     }
 
     public void notEnoughMana(){
@@ -164,7 +172,7 @@ public class FightController {
                 new KeyFrame(Duration.seconds(1), e -> card4.setDisable(true)),
                 new KeyFrame(Duration.seconds(1), e -> { cardController.cardButtonUnload(card4); updateLabel();}),
 
-                new KeyFrame(Duration.seconds(1.25), e -> playerService.damagePlayer(10)),
+                new KeyFrame(Duration.seconds(1.25), e -> this.enemyMove()),
 
                 new KeyFrame(Duration.seconds(1.5), e -> card1.setDisable(false)),
                 new KeyFrame(Duration.seconds(1.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel();}),
@@ -175,11 +183,32 @@ public class FightController {
                 new KeyFrame(Duration.seconds(2.25), e -> card4.setDisable(false)),
                 new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel();}),
 
+                new KeyFrame(Duration.seconds(2.5),  e -> updateEnemyState()),
                 new KeyFrame(Duration.seconds(2.5),  e -> updateMana()),
                 new KeyFrame(Duration.seconds(2.5),  e -> endTurn.setDisable(false))
 
         );
         enemyturn.play();
+    }
+
+    public void enemyMove(){
+
+        String methodName = enemyService.enemyIntention().get(enemyService.getMoveControl()).trim();
+        try {
+            Method method = EnemyService.class.getMethod(methodName, int.class);
+            method.invoke(enemyService, enemyService.intentionValue().get(enemyService.getMoveControl()));
+            updateLabel();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateEnemyState(){
+        enemyService.setMoveControl(enemyService.getMoveControl() + 1);
+        if(enemyService.getMoveControl() == 6){ enemyService.setMoveControl(0); }
+        enemyIntention.setText(enemyService.enemyIntention().get(enemyService.getMoveControl()));
+        intentionValue.setText(enemyService.intentionValue().get(enemyService.getMoveControl())+"");
     }
 
     public void updateMana(){

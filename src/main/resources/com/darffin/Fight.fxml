@@ -27,5 +27,7 @@
       <Label fx:id="enemyName" alignment="CENTER" contentDisplay="CENTER" layoutX="228.0" layoutY="304.0" prefHeight="17.0" prefWidth="72.0" text="Enemy name" textAlignment="CENTER" />
       <Label fx:id="playerLife1" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="475.0" layoutY="645.0" prefHeight="17.0" prefWidth="44.0" text="Mana" textOverrun="WORD_ELLIPSIS" wrapText="true" />
       <Label fx:id="playerMana" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="676.0" prefHeight="17.0" prefWidth="44.0" text="0" textAlignment="CENTER" />
+      <Label fx:id="enemyIntention" layoutX="191.0" layoutY="66.0" prefHeight="38.0" prefWidth="44.0" text="Intent" />
+      <Label fx:id="intentionValue" alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="70.0" prefHeight="30.0" prefWidth="44.0" text="0" textAlignment="CENTER" wrapText="true" />
    </children>
 </Pane>
