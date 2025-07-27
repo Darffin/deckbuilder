@@ -19,6 +19,7 @@ public class CardEffectService {
 
     public void Cumulonimbus(){
         enemyService.damageEnemy(10);
+        playerService.giveShield(10);
     }
 
     public void FireDart(){
@@ -35,9 +36,11 @@ public class CardEffectService {
 
     public void LichWind(){
         enemyService.damageEnemy(13);
+        playerService.giveStrength(1);
     }
 
     public void InfernoShuriken(){
         enemyService.damageEnemy(11);
+        playerService.giveStrength(3);
     }
 }

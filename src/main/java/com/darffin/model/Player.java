@@ -14,7 +14,7 @@ public class Player {
 
     private Player(){
         this.life = 60;
-        this.mana = 3;
+        this.mana = 6;
     }
 
     public static Player getInstance(){

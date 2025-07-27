@@ -23,7 +23,13 @@ public class PlayerService {
     }
 
     public void damagePlayer(int damage) {
-        player.setLife(player.getLife() - damage);
+        if(damage > player.getShield()){
+            player.setLife(player.getLife() - (damage - player.getShield()));
+            player.setShield(0);
+        }else {
+            player.setShield(player.getShield() - damage);
+        }
+
     }
 
     public List<Card> playerDeck(){
@@ -36,6 +42,14 @@ public class PlayerService {
 
     public void setPlayerDeckDefault(){
         player.setDeckPlayer(cardService.defaultDeck());
+    }
+
+    public void uploadPlayerEffects(){
+        if(player.getStrength() > 0){
+            player.setStrength(player.getStrength() - 1); // Player lose 1 of strength each round
+        }
+
+        player.setShield(0); // At the end of enemy turn, player lose all shield, abilities update will have a power to stop that.
     }
 
     public void verifyDeckAvailability(){
@@ -54,4 +68,19 @@ public class PlayerService {
         this.player.setMana(e);
     }
 
+    public int shield(){
+        return player.getShield();
+    }
+
+    public int strength(){
+        return player.getStrength();
+    }
+
+    public void giveShield(int value){
+        player.setShield(shield()+value);
+    }
+
+    public void giveStrength(int value){
+        player.setStrength(strength()+value);
+    }
 }

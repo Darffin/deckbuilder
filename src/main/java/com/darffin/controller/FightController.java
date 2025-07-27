@@ -142,6 +142,7 @@ public class FightController {
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
         playerLife.setText(playerService.playerLife() + "");
         enemyLife.setText(enemyService.enemyLife() + "");
+        verifyEffects();
     }
 
     public void notEnoughMana(){
@@ -189,6 +190,7 @@ public class FightController {
                 new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel();}),
 
                 new KeyFrame(Duration.seconds(2.5),  e -> updateEnemyState()),
+                new KeyFrame(Duration.seconds(2.5),  e -> { playerService.uploadPlayerEffects(); updateLabel(); }),
                 new KeyFrame(Duration.seconds(2.5),  e -> updateMana()),
                 new KeyFrame(Duration.seconds(2.5),  e -> endTurn.setDisable(false))
 
@@ -207,6 +209,40 @@ public class FightController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void verifyEffects(){
+        System.out.println("Shield: "+playerService.shield() +" Força:"+ playerService.strength());
+        if((effect1.getText().matches("Shield.*"))&&(playerService.shield()<=0)){
+            if(playerService.strength() > 0){
+                effect1.setText("Strength: "+playerService.strength());
+                effect2.setText("");
+            } else effect1.setText("");
+        }
+
+        if((effect1.getText().matches("Strength.*"))&&(playerService.strength()<=0)){
+            if(playerService.shield() > 0){
+                effect1.setText("Shield: "+playerService.shield());
+            } effect1.setText("");
+        }
+
+        if(((effect2.getText().matches("Shield.*"))&&(playerService.shield()<=0)) || ((effect2.getText().matches("Strength.*"))&&(playerService.strength()<=0))){
+            effect2.setText("");
+        }
+
+        if(playerService.shield() > 0){
+            if(effect1.getText().isEmpty() || effect1.getText().matches("Shield.*")){
+                effect1.setText("Shield: "+playerService.shield());
+            } else effect2.setText("Shield: "+playerService.shield());
+        }
+
+        if(playerService.strength() > 0){
+            if(effect1.getText().isEmpty() || effect1.getText().matches("Strength.*")){
+                effect1.setText("Strength: " + playerService.strength());
+            } else effect2.setText("Strength: " + playerService.strength());
+        }
+
+
     }
 
     public void updateEnemyState(){

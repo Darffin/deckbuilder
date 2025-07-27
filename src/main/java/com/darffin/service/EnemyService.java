@@ -2,6 +2,7 @@ package com.darffin.service;
 
 import com.darffin.model.Enemy;
 import com.darffin.model.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 public class EnemyService {
 
     private final Enemy enemy = Enemy.getEnemyInstance();
-    private final Player player = Player.getInstance();
+    @Autowired
+    private PlayerService playerService;
     private int moveControl;
 
     public EnemyService(){
@@ -34,11 +36,11 @@ public class EnemyService {
     }
 
     public void atk(int value){
-        player.setLife(player.getLife() - value);
+        playerService.damagePlayer(value);
     }
 
     public void heavyAtk(int value){
-        player.setLife(player.getLife() - value);
+        playerService.damagePlayer(value);
     }
 
     public void wait(int value){
