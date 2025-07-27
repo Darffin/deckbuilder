@@ -6,6 +6,9 @@ import java.util.List;
 public class Player {
     private int life;
     private int mana;
+    private int shield;
+    private int strength;
+
     private List<Card> deckPlayer = new ArrayList<Card>();
     private static Player player;
 
@@ -39,9 +42,23 @@ public class Player {
         return mana;
     }
 
+    public void setShield(int shield) {
+        this.shield = shield;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
     public void setMana(int mana) {
         this.mana = mana;
     }
 
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
 
+    public int getStrength() {
+        return strength;
+    }
 }

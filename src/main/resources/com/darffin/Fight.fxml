@@ -25,9 +25,11 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="138.0" layoutY="239.0" prefHeight="17.0" prefWidth="64.0" text="Enemy Life" textAlignment="CENTER" />
       <Button fx:id="endTurn" layoutX="411.0" layoutY="438.0" mnemonicParsing="false" onAction="#endTurn" prefHeight="30.0" prefWidth="86.0" text="End Turn" />
       <Label fx:id="enemyName" alignment="CENTER" contentDisplay="CENTER" layoutX="228.0" layoutY="304.0" prefHeight="17.0" prefWidth="72.0" text="Enemy name" textAlignment="CENTER" />
-      <Label fx:id="playerLife1" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="475.0" layoutY="645.0" prefHeight="17.0" prefWidth="44.0" text="Mana" textOverrun="WORD_ELLIPSIS" wrapText="true" />
+      <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="475.0" layoutY="645.0" prefHeight="17.0" prefWidth="44.0" text="Mana" textOverrun="WORD_ELLIPSIS" wrapText="true" />
       <Label fx:id="playerMana" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="676.0" prefHeight="17.0" prefWidth="44.0" text="0" textAlignment="CENTER" />
-      <Label fx:id="enemyIntention" layoutX="191.0" layoutY="66.0" prefHeight="38.0" prefWidth="44.0" text="Intent" />
+      <Label fx:id="enemyIntention" alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="66.0" prefHeight="38.0" prefWidth="79.0" text="Intent" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="intentionValue" alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="70.0" prefHeight="30.0" prefWidth="44.0" text="0" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="effect1" layoutX="56.0" layoutY="445.0" text="effect1" />
+      <Label fx:id="effect2" layoutX="138.0" layoutY="445.0" text="effect2" />
    </children>
 </Pane>

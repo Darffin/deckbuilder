@@ -52,6 +52,11 @@ public class FightController {
     private Label enemyIntention;
     @FXML
     private Label intentionValue;
+    @FXML
+    private Label effect1;
+    @FXML
+    private Label effect2;
+
 
     private Card card;
 
