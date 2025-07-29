@@ -12,5 +12,5 @@
          </font>
       </Label>
       <Button fx:id="close" layoutX="165.0" layoutY="590.0" mnemonicParsing="false" onAction="#closeGame" prefHeight="68.0" prefWidth="210.0" text="Close" />
-   <Button layoutX="165.0" layoutY="490.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="210.0" text="Continue" />
+   <Button fx:id="continueGame" layoutX="165.0" layoutY="490.0" mnemonicParsing="false"  onAction="#continueGame" prefHeight="68.0" prefWidth="210.0" text="Continue" />
 </Pane>

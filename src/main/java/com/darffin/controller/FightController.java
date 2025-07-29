@@ -17,15 +17,20 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
 
 
 @Component
 public class FightController {
+    @Autowired
+    private ApplicationContext context;
+
     @FXML
     private Button card1;
     @FXML
@@ -56,7 +61,8 @@ public class FightController {
     private Label effect1;
     @FXML
     private Label effect2;
-
+    @FXML
+    private Button result;
 
     private Card card;
 
@@ -71,6 +77,9 @@ public class FightController {
 
     @Autowired
     PlayerService playerService;
+
+    @Autowired
+    PlayerProgressService playerProgressService;
 
     @Autowired
     CardService cardService;
@@ -115,6 +124,8 @@ public class FightController {
                 Method method = CardEffectService.class.getMethod(methodName);
                 method.invoke(cardEffectService);
                 enemyLife.setText(enemyService.enemyLife() + "");
+
+                verifyMatchResult();
 
                 cardService.addToDiscardDeck(selectedCard);
 
@@ -181,7 +192,7 @@ public class FightController {
                 new KeyFrame(Duration.seconds(1.25), e -> this.enemyMove()),
 
                 new KeyFrame(Duration.seconds(1.5), e -> card1.setDisable(false)),
-                new KeyFrame(Duration.seconds(1.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel();}),
+                new KeyFrame(Duration.seconds(1.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel(); verifyMatchResult();}),
                 new KeyFrame(Duration.seconds(1.75), e -> card2.setDisable(false)),
                 new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateLabel();}),
                 new KeyFrame(Duration.seconds(2), e -> card3.setDisable(false)),
@@ -259,6 +270,48 @@ public class FightController {
 
     public void endTurn(){
         enemyTurn();
+    }
+
+    public void verifyMatchResult(){
+        if(playerService.playerLife()<=0){
+            result.setOnAction(event -> {
+                try { this.defeat();}
+                catch (IOException e) { throw new RuntimeException(e); }
+            });
+            result.setVisible(true);
+            result.setText("Defeat!");
+        }
+        if(enemyService.enemyLife() <= 0){
+            result.setOnAction(event -> {
+                try { this.victory();}
+                catch (IOException e) { throw new RuntimeException(e); }
+            });
+            result.setVisible(true);
+            result.setText("Victory!");
+        }
+
+    }
+
+    public void victory() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
+        Parent map = fxmlLoader.load();
+
+        Stage stage = (Stage) result.getScene().getWindow();
+        Scene scene = new Scene(map);
+        stage.setScene(scene);
+    }
+
+    public void defeat() throws IOException {
+
+        playerProgressService.resetPlayerProgress();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/MainMenu.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
+        Parent mainMenu = fxmlLoader.load();
+
+        Stage stage = (Stage) result.getScene().getWindow();
+        Scene scene = new Scene(mainMenu);
+        stage.setScene(scene);
     }
 
 

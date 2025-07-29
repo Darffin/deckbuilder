@@ -31,6 +31,9 @@ public class EnemyService {
         return enemy.getLife();
     }
 
+    public void enemyLizard(){
+        this.enemy.ForestLizard();
+    }
     public void updateMana(){
 
     }

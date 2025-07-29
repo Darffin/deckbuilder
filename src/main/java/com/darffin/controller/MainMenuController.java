@@ -1,5 +1,8 @@
 package com.darffin.controller;
 
+import com.darffin.model.Player;
+import com.darffin.model.PlayerProgress;
+import com.darffin.service.PlayerProgressService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,14 +18,23 @@ import java.io.IOException;
 @Component
 public class MainMenuController {
     @Autowired
-    private PlayerController playerController;
+    private PlayerProgressService playerProgressService;
     @FXML
     private Button close;
     @FXML
     private Button newGame;
+    @FXML
+    private Button continueGame;
     @Autowired
     private ApplicationContext context; // injeta o contexto Spring
 
+    private Player player;
+    private PlayerProgress playerProgress;
+    public void initialize(){
+        if(playerProgressService.getLastNodeId()==null){
+            continueGame.setDisable(true);
+        }
+    }
     @FXML
     private void newGame() throws IOException {
 
@@ -36,15 +48,28 @@ public class MainMenuController {
         fightController.prepareNewGame();
 
          */
+        playerProgressService.resetPlayerProgress();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/PlayerClass.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent playerClass = fxmlLoader.load();
 
+        Stage stage = (Stage) newGame.getScene().getWindow();
+        Scene scene = new Scene(playerClass);
+        stage.setScene(scene);
+
+    }
+    @FXML
+    private void continueGame() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
-        fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
+        fxmlLoader.setControllerFactory(context::getBean);
         Parent map = fxmlLoader.load();
+
+        playerProgress = playerProgressService.getProgress();
+        Player.setPlayer(playerProgress.getPlayer());
 
         Stage stage = (Stage) newGame.getScene().getWindow();
         Scene scene = new Scene(map);
         stage.setScene(scene);
-
     }
 
     @FXML

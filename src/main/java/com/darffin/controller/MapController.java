@@ -1,19 +1,29 @@
 package com.darffin.controller;
 
 import com.darffin.model.PlayerProgress;
+import com.darffin.service.EnemyService;
 import com.darffin.service.PlayerProgressService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import com.darffin.model.MapNode;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class MapController {
+    @Autowired
+    private ApplicationContext context;
     @FXML
     private Button btn1Lv1;
     @FXML
@@ -48,10 +58,11 @@ public class MapController {
     private Map<String, MapNode> map = new HashMap<>(); // In future updates, remove interaction between controller and model(MapNode)
     @Autowired
     private PlayerProgressService playerProgressService;
+    @Autowired
+    private EnemyService enemyService;
     //private PlayerProgress playerProgress = playerProgressService.getProgress();
     @FXML
     public void initialize() {
-        System.out.println("Total de nós no mapa: " + map.size());
         map.put("1_1", new MapNode("1_1", btn1Lv1));
         map.put("1_2", new MapNode("1_2", btn2Lv1));
         map.put("1_3", new MapNode("1_3", btn3Lv1));
@@ -97,20 +108,15 @@ public class MapController {
 
         applyPlayerProgress();
 
-
-
     }
 
     private void applyPlayerProgress() {
-        System.out.println("Rodando applyPlayerProgress()");
-
         String current = playerProgressService.getProgress().getLastNodeId();
         if (current != null && !current.isEmpty()) {
             MapNode node = map.get(current);
             System.out.println("LastNodeId: " + current);
 
             if (node != null) {
-                System.out.println("Habilitando botão: " + node.getId());
                 node.getNext().forEach(n -> n.getButton().setDisable(false));
             }
         } else {
@@ -119,6 +125,40 @@ public class MapController {
                     .filter(n -> n.getId().startsWith("1_"))
                     .forEach(n -> n.getButton().setDisable(false));
         }
+    }
+
+
+
+
+
+    public void loadFight(ActionEvent event) throws IOException {
+        Button clickedButton = (Button) event.getSource();
+        String nodeId = clickedButton.getId();
+
+        MapNode node = map.get(nodeId);
+        System.out.println("Node clicado: " + node);
+        if (node != null) {
+            node.getNext().forEach(n -> n.getButton().setDisable(false));
+            node.getNext().forEach(n -> System.out.println("Node next: " + n.getId()));
+        }
+        playerProgressService.updateLastNode(nodeId);
+
+        enemyService.enemyLizard(); // Update to other methods
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Fight.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent fight = fxmlLoader.load();
+
+        FightController fightController = fxmlLoader.getController();
+
+        fightController.prepareNewGame();
+        Stage stage = (Stage) clickedButton.getScene().getWindow();
+        Scene scene = new Scene(fight);
+        stage.setScene(scene);
+
+
+
+
     }
 
 

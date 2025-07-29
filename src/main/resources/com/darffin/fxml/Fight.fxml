@@ -31,5 +31,6 @@
       <Label fx:id="intentionValue" alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="70.0" prefHeight="30.0" prefWidth="44.0" text="0" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="effect1" layoutX="56.0" layoutY="445.0" text="" />
       <Label fx:id="effect2" layoutX="138.0" layoutY="445.0" text="" />
+      <Button fx:id="result" alignment="CENTER" contentDisplay="CENTER" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="86.0" textAlignment="CENTER" visible="false" />
    </children>
 </Pane>
