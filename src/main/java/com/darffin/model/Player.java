@@ -17,7 +17,12 @@ public class Player {
 
     private String lastNodeId;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+            name = "player_deck",
+            joinColumns = @JoinColumn(name = "player_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id")
+    )
     private List<Card> deckPlayer = new ArrayList<Card>();
 
     private static Player player;

@@ -40,12 +40,6 @@ public class PlayerProgressService {
         progressRepository.save(progress);
     }
 
-    public void saveLastNode(String nodeId) {
-        Player progress = getProgress();
-        progress.setLastNodeId(nodeId);
-        saveProgress(progress);
-    }
-
     public void updateLastNode(String nodeId) {
         //Player progress = getProgress();
         player.setLastNodeId(nodeId);

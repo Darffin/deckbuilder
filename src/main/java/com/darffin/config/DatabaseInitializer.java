@@ -63,8 +63,6 @@ public class DatabaseInitializer {
             cardService.saveCard(infernoShuriken);
         }
 
-
-
     }
 
 }
