@@ -1,25 +1,36 @@
 package com.darffin.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Player {
+    @Id
+    private Long id = 1L;
+
     private int life;
     private int mana;
     private int shield;
     private int strength;
 
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Card> deckPlayer = new ArrayList<Card>();
     private static Player player;
 
-    private Player(){
-        this.life = 60;
-        this.mana = 6;
-    }
+    //private Player(){
+    //    this.life = 60;
+    //    this.mana = 6;
+    //}
 
     public static Player getInstance(){
         if(player == null) player = new Player();
         return player;
+    }
+
+    public static void resetInstance(){
+        player = new Player();
     }
 
     public int getLife() {
@@ -60,5 +71,13 @@ public class Player {
 
     public int getStrength() {
         return strength;
+    }
+
+    public static Player getPlayer() {
+        return player;
+    }
+
+    public static void setPlayer(Player player) {
+        Player.player = player;
     }
 }

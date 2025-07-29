@@ -18,9 +18,21 @@ public class PlayerService {
     @Autowired
     private CardService cardService;
 
+    public void Luna(){
+        player.setLife(60);
+        player.setMana(6);
+    }
+
+    public void Solano(){
+        player.setLife(80);
+        player.setMana(3);
+    }
+
     public int playerLife(){
         return player.getLife();
     }
+
+
 
     public void damagePlayer(int damage) {
         if(damage > player.getShield()){
