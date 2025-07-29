@@ -1,7 +1,6 @@
 package com.darffin.service;
 
 import com.darffin.model.Player;
-import com.darffin.model.PlayerProgress;
 import com.darffin.repository.PlayerProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,33 +13,35 @@ public class PlayerProgressService {
 
     private Player player = Player.getInstance();
 
-    public PlayerProgress getProgress() {
+    public Player getProgress() {
         return progressRepository.findById(1L).orElseGet(() -> {
-            PlayerProgress progress = new PlayerProgress();
+            Player progress = new Player();
             return progressRepository.save(progress);
         });
     }
 
-    public void loadPlayer(){
-        PlayerProgress progress = getProgress();
-        player = progress.getPlayer();
+    public void loadPlayer(Player progress){
+        player.setLife(progress.getLife());
+        player.setMana(progress.getMana());
+        player.setShield(progress.getShield());
+        player.setStrength(progress.getStrength());
     }
 
 
     public void resetPlayerProgress(){
 
         //Map progress
-        PlayerProgress progress = getProgress();
+        Player progress = getProgress();
         progress.setLastNodeId(null);
         saveProgress(progress);
     }
 
-    public void saveProgress(PlayerProgress progress) {
+    public void saveProgress(Player progress) {
         progressRepository.save(progress);
     }
 
     public void updateLastNode(String nodeId) {
-        PlayerProgress progress = getProgress();
+        Player progress = getProgress();
         progress.setLastNodeId(nodeId);
         saveProgress(progress);
     }

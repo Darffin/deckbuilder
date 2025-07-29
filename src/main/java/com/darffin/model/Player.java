@@ -15,8 +15,11 @@ public class Player {
     private int shield;
     private int strength;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    private String lastNodeId;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Card> deckPlayer = new ArrayList<Card>();
+
     private static Player player;
 
     //private Player(){
@@ -79,5 +82,13 @@ public class Player {
 
     public static void setPlayer(Player player) {
         Player.player = player;
+    }
+
+    public String getLastNodeId() {
+        return lastNodeId;
+    }
+
+    public void setLastNodeId(String lastNodeId) {
+        this.lastNodeId = lastNodeId;
     }
 }
