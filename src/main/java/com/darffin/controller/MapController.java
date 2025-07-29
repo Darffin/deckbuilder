@@ -1,6 +1,5 @@
 package com.darffin.controller;
 
-import com.darffin.model.PlayerProgress;
 import com.darffin.service.EnemyService;
 import com.darffin.service.PlayerProgressService;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ import com.darffin.model.MapNode;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component

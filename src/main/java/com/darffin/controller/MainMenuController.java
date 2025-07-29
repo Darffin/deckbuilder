@@ -1,7 +1,6 @@
 package com.darffin.controller;
 
 import com.darffin.model.Player;
-import com.darffin.model.PlayerProgress;
 import com.darffin.service.PlayerProgressService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +28,7 @@ public class MainMenuController {
     private ApplicationContext context; // injeta o contexto Spring
 
     private Player player;
-    private PlayerProgress playerProgress;
+    private Player playerProgress;
     public void initialize(){
         if(playerProgressService.getLastNodeId()==null){
             continueGame.setDisable(true);
@@ -64,8 +63,7 @@ public class MainMenuController {
         fxmlLoader.setControllerFactory(context::getBean);
         Parent map = fxmlLoader.load();
 
-        playerProgress = playerProgressService.getProgress();
-        Player.setPlayer(playerProgress.getPlayer());
+        playerProgressService.loadPlayer(playerProgressService.getProgress());
 
         Stage stage = (Stage) newGame.getScene().getWindow();
         Scene scene = new Scene(map);

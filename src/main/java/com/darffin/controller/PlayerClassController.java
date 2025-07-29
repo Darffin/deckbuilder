@@ -1,5 +1,6 @@
 package com.darffin.controller;
 
+import com.darffin.service.PlayerProgressService;
 import com.darffin.service.PlayerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,8 @@ public class PlayerClassController {
 
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private PlayerProgressService playerProgressService;
 
     public void chooseSolano() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
@@ -31,6 +34,7 @@ public class PlayerClassController {
         Parent map = fxmlLoader.load();
 
         playerService.Solano();
+        playerProgressService.saveProgress(playerService.getPlayer());
 
         Stage stage = (Stage) solanoBtn.getScene().getWindow();
         Scene scene = new Scene(map);
@@ -43,6 +47,7 @@ public class PlayerClassController {
         Parent map = fxmlLoader.load();
 
         playerService.Luna();
+        playerProgressService.saveProgress(playerService.getPlayer());
 
         Stage stage = (Stage) lunaBtn.getScene().getWindow();
         Scene scene = new Scene(map);

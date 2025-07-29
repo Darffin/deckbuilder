@@ -1,7 +1,6 @@
 package com.darffin.config;
 
 import com.darffin.model.Card;
-import com.darffin.model.PlayerProgress;
 import com.darffin.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

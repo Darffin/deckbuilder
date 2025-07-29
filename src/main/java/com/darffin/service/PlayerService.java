@@ -95,4 +95,8 @@ public class PlayerService {
     public void giveStrength(int value){
         player.setStrength(strength()+value);
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

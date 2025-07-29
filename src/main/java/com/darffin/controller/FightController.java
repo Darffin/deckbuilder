@@ -286,6 +286,7 @@ public class FightController {
                 try { this.victory();}
                 catch (IOException e) { throw new RuntimeException(e); }
             });
+            playerProgressService.saveProgress(playerService.getPlayer());
             result.setVisible(true);
             result.setText("Victory!");
         }
