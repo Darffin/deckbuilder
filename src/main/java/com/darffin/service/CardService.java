@@ -29,18 +29,17 @@ public class CardService {
 
     public List<Card> defaultDeck(){
         List<Card> deck = new ArrayList<Card>();
-        deck = this.getAllCards();
+        //deck = this.getAllCards();
 
-        /*
-        deck.add(cardController.getCardByName("Fire ball"));
-        deck.add(cardController.getCardByName("Cumulonimbus"));
-        deck.add(cardController.getCardByName("Fire Dart"));
-        deck.add(cardController.getCardByName("Water Splash"));
-        deck.add(cardController.getCardByName("Quagmire"));
-        deck.add(cardController.getCardByName("Lich Wind"));
-        deck.add(cardController.getCardByName("Inferno Shuriken"));
-        deck.add(cardController.getCardByName("Fire ball"));
-         */
+        deck.add(cardRepository.findByName("Fire Ball"));
+        deck.add(cardRepository.findByName("Cumulonimbus"));
+        deck.add(cardRepository.findByName("Fire Dart"));
+        deck.add(cardRepository.findByName("Water Splash"));
+        deck.add(cardRepository.findByName("Quagmire"));
+        deck.add(cardRepository.findByName("Lich Wind"));
+        deck.add(cardRepository.findByName("Inferno Shuriken"));
+        deck.add(cardRepository.findByName("Fire Ball"));
+
         return deck;
     }
 

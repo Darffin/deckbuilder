@@ -12,7 +12,8 @@ public class Card {
     private Long id;
     private String name;
     private String effect;
-
+    private int cost;
+    private String rarity;
 
     public Card(){
         //this.tempAdd();
@@ -34,9 +35,19 @@ public class Card {
         this.effect = effect;
     }
 
+    public int getCost() {
+        return cost;
+    }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
 
+    public String getRarity() {
+        return rarity;
+    }
 
-
-
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
 }
