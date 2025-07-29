@@ -22,9 +22,11 @@ public class MainMenuController {
     private Button newGame;
     @Autowired
     private ApplicationContext context; // injeta o contexto Spring
+
     @FXML
     private void newGame() throws IOException {
 
+        /* Fight arena scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/Fight.fxml"));
         fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
         Parent fight = fxmlLoader.load();
@@ -33,10 +35,16 @@ public class MainMenuController {
 
         fightController.prepareNewGame();
 
+         */
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
+        Parent map = fxmlLoader.load();
 
         Stage stage = (Stage) newGame.getScene().getWindow();
-        Scene scene = new Scene(fight);
+        Scene scene = new Scene(map);
         stage.setScene(scene);
+
     }
 
     @FXML

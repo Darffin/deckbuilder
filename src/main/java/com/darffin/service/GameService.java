@@ -11,10 +11,6 @@ public class GameService {
 
     private final Player player = Player.getInstance();
 
-    public void damageEnemy(int damage) {
-        //player.setLife(player.getLife() - damage);
-    }
-
     public int getMana() {
         return mana;
     }
