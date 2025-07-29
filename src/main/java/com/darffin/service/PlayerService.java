@@ -32,8 +32,6 @@ public class PlayerService {
         return player.getLife();
     }
 
-
-
     public void damagePlayer(int damage) {
         if(damage > player.getShield()){
             player.setLife(player.getLife() - (damage - player.getShield()));

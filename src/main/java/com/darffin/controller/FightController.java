@@ -287,6 +287,7 @@ public class FightController {
                 catch (IOException e) { throw new RuntimeException(e); }
             });
             playerProgressService.saveProgress(playerService.getPlayer());
+            //playerProgressService.saveLastNode(playerProgressService.getNotSavedNode());
             result.setVisible(true);
             result.setText("Victory!");
         }
