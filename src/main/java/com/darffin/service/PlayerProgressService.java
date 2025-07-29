@@ -23,8 +23,8 @@ public class PlayerProgressService {
     public void loadPlayer(Player progress){
         player.setLife(progress.getLife());
         player.setMana(progress.getMana());
-        player.setShield(progress.getShield());
-        player.setStrength(progress.getStrength());
+        //player.setShield(progress.getShield());
+        //player.setStrength(progress.getStrength());
     }
 
 

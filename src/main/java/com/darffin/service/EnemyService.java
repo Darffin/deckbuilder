@@ -20,7 +20,7 @@ public class EnemyService {
     }
 
     public void damageEnemy(int value){
-        enemy.setLife(enemy.getLife() - value);
+        enemy.setLife(enemy.getLife() - (value + playerService.strength()));
     }
 
     public String enemyName(){
