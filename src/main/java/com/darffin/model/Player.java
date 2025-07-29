@@ -12,6 +12,7 @@ public class Player {
 
     private int life;
     private int mana;
+    private int gold;
     private int shield;
     private int strength;
 
@@ -95,5 +96,13 @@ public class Player {
 
     public void setLastNodeId(String lastNodeId) {
         this.lastNodeId = lastNodeId;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 }

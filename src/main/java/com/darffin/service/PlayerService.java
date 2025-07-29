@@ -21,11 +21,13 @@ public class PlayerService {
     public void Luna(){
         player.setLife(60);
         player.setMana(6);
+        player.setGold(40);
     }
 
     public void Solano(){
         player.setLife(80);
         player.setMana(3);
+        player.setGold(80);
     }
 
     public int playerLife(){
