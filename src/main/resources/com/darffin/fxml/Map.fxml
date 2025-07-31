@@ -12,7 +12,7 @@
             <Image url="@../img/prot.png" />
          </image></ImageView>
       <Canvas height="780.0" width="540.0" />
-      <Button id="1_1" fx:id="btn1Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="590.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Button" textAlignment="CENTER" />
+      <Button id="1_1" fx:id="btn1Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="70.0" layoutY="590.0" mnemonicParsing="false" onAction="#loadStore" prefHeight="55.0" prefWidth="55.0" text="Button" textAlignment="CENTER" />
       <Button id="1_4" fx:id="btn4Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="590.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Button" textAlignment="CENTER" />
       <Button id="1_3" fx:id="btn3Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="590.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Button" textAlignment="CENTER" />
       <Button id="1_2" fx:id="btn2Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="190.0" layoutY="590.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Button" textAlignment="CENTER" />

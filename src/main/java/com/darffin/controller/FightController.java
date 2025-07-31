@@ -64,8 +64,6 @@ public class FightController {
     @FXML
     private Button result;
 
-    private Card card;
-
     @Autowired
     private PlayerController playerController;
 

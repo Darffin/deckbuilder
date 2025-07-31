@@ -55,7 +55,7 @@ public class PlayerService {
     }
 
     public void setPlayerDeckDefault(){
-        player.setDeckPlayer(cardService.legendaryDeck());
+        player.setDeckPlayer(cardService.defaultDeck());
     }
 
     public void uploadPlayerEffects(){
@@ -76,6 +76,14 @@ public class PlayerService {
 
     public int playerMana(){
         return player.getMana();
+    }
+
+    public int playerGold(){
+        return player.getGold();
+    }
+
+    public void spendGold(int gold){
+        player.setGold(player.getGold() - gold);
     }
 
     public void setPlayerMana(int e){

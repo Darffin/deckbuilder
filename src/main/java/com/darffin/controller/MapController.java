@@ -126,7 +126,26 @@ public class MapController {
     }
 
 
+    public void loadStore(ActionEvent event) throws IOException {
+        Button clickedButton = (Button) event.getSource();
+        String nodeId = clickedButton.getId();
 
+        MapNode node = map.get(nodeId);
+        System.out.println("Node clicado: " + node);
+        if (node != null) {
+            node.getNext().forEach(n -> n.getButton().setDisable(false));
+            node.getNext().forEach(n -> System.out.println("Node next: " + n.getId()));
+        }
+        playerProgressService.updateLastNode(nodeId);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Store.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent store = fxmlLoader.load();
+
+        Stage stage = (Stage) clickedButton.getScene().getWindow();
+        Scene scene = new Scene(store);
+        stage.setScene(scene);
+    }
 
 
     public void loadFight(ActionEvent event) throws IOException {
