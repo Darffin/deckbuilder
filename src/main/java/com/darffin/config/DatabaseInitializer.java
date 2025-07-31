@@ -168,7 +168,7 @@ public class DatabaseInitializer {
             Card cumulonimbus = new Card();
 
             cumulonimbus.setName("Cumulonimbus");
-            cumulonimbus.setEffect("Inflicts 10 damage and 5 strength");
+            cumulonimbus.setEffect("Inflicts 10 damage and gain 5 strength");
             cumulonimbus.setCost(75);
             cumulonimbus.setRarity("Legendary");
             cardService.saveCard(cumulonimbus);

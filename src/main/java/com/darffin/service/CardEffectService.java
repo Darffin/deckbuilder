@@ -1,7 +1,5 @@
 package com.darffin.service;
 
-import com.darffin.model.Card;
-import com.darffin.model.Enemy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ public class CardEffectService {
     @Autowired
     private GameService gameService;
 
-    // ---------------- *** Common Cards *** ----------------
+    // ---------------- *** Common Cards [8] *** ----------------
 
     public void FireBall(){
         enemyService.damageEnemy(6);
@@ -55,7 +53,7 @@ public class CardEffectService {
         playerService.giveShield(-playerService.shield()); // Maybe not :)
     }
 
-    // ---------------- *** Rare Cards *** ----------------
+    // ---------------- *** Rare Cards [4] *** ----------------
 
     public void InoffensiveFrog(){
         gameService.setPoison(gameService.getPoison() + 8);
@@ -76,7 +74,7 @@ public class CardEffectService {
         playerService.giveStrength(8);
     }
 
-    // ---------------- *** Epic Cards *** ----------------
+    // ---------------- *** Epic Cards [4] *** ----------------
 
     public void ManaBeacon(){
         gameService.setMana(gameService.getMana() + 2);
@@ -96,7 +94,7 @@ public class CardEffectService {
         enemyService.damageEnemy(playerService.shield());
     }
 
-    // ---------------- *** Legendary Cards *** ----------------
+    // ---------------- *** Legendary Cards [4] *** ----------------
 
     public void HazardWorld(){
         gameService.setPoison(gameService.getPoison() * 2);
@@ -111,6 +109,11 @@ public class CardEffectService {
 
     public void StoneDome(){
         playerService.giveShield(20);
+    }
+
+    public void Cumulonimbus(){
+        enemyService.damageEnemy(10);
+        playerService.giveStrength(5);
     }
 
 }

@@ -106,7 +106,7 @@ public class FightController {
 
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
 
-        playerService.setPlayerDeckDefault();
+        //playerService.setPlayerDeckDefault();
 
         cardController.cardButtonsUpdate(card1,card2,card3,card4);
 
@@ -176,7 +176,7 @@ public class FightController {
 
     }
 
-    public void enemyTurn(){
+    public void enemyTurn(){ // Brazilian gambiarra
         Timeline enemyturn = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> endTurn.setDisable(true)),
 
@@ -188,22 +188,20 @@ public class FightController {
                 new KeyFrame(Duration.seconds(0.75), e -> { cardController.cardButtonUnload(card3); updateLabel();}),
                 new KeyFrame(Duration.seconds(1), e -> card4.setDisable(true)),
                 new KeyFrame(Duration.seconds(1), e -> { cardController.cardButtonUnload(card4); updateLabel();}),
+                new KeyFrame(Duration.seconds(1.25), e -> { gameService.applyGameEffect("start"); updateLabel();}), // add poison and strength later
 
-                new KeyFrame(Duration.seconds(1.25), e -> this.enemyMove()),
+                new KeyFrame(Duration.seconds(1.5), e -> this.enemyMove()),
 
-                new KeyFrame(Duration.seconds(1.5), e -> card1.setDisable(false)),
-                new KeyFrame(Duration.seconds(1.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel(); verifyMatchResult();}),
-                new KeyFrame(Duration.seconds(1.75), e -> card2.setDisable(false)),
-                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateLabel();}),
-                new KeyFrame(Duration.seconds(2), e -> card3.setDisable(false)),
-                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); updateLabel();}),
-                new KeyFrame(Duration.seconds(2.25), e -> card4.setDisable(false)),
-                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel();}),
+                new KeyFrame(Duration.seconds(1.75), e -> { verifyMatchResult(); gameService.applyGameEffect("end"); updateLabel();}),
+                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel(); card1.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateLabel(); card2.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); updateLabel(); card3.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel(); card4.setDisable(false);}),
 
-                new KeyFrame(Duration.seconds(2.5),  e -> updateEnemyState()),
-                new KeyFrame(Duration.seconds(2.5),  e -> { playerService.uploadPlayerEffects(); updateLabel(); }),
-                new KeyFrame(Duration.seconds(2.5),  e -> updateMana()),
-                new KeyFrame(Duration.seconds(2.5),  e -> endTurn.setDisable(false))
+                new KeyFrame(Duration.seconds(2.75),  e -> updateEnemyState()),
+                new KeyFrame(Duration.seconds(2.75),  e -> { playerService.uploadPlayerEffects(); updateLabel(); }),
+                new KeyFrame(Duration.seconds(2.75),  e -> updateMana()),
+                new KeyFrame(Duration.seconds(2.75),  e -> endTurn.setDisable(false))
 
         );
         enemyturn.play();

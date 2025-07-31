@@ -22,12 +22,14 @@ public class PlayerService {
         player.setLife(60);
         player.setMana(6);
         player.setGold(40);
+        player.setDeckPlayer(cardService.lunaDefaultDeck());
     }
 
     public void Solano(){
         player.setLife(80);
         player.setMana(3);
         player.setGold(80);
+        player.setDeckPlayer(cardService.solanoDefaultDeck());
     }
 
     public int playerLife(){
@@ -53,12 +55,12 @@ public class PlayerService {
     }
 
     public void setPlayerDeckDefault(){
-        player.setDeckPlayer(cardService.defaultDeck());
+        player.setDeckPlayer(cardService.legendaryDeck());
     }
 
     public void uploadPlayerEffects(){
         if(player.getStrength() > 0){
-            player.setStrength(player.getStrength() - 1); // Player lose 1 of strength each round
+            player.setStrength(0); // Player lose 1 of strength each round is too OP, instead, reset each round
         }
 
         player.setShield(0); // At the end of enemy turn, player lose all shield, abilities update will have a power to stop that.

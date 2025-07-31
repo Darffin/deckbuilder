@@ -40,19 +40,19 @@ public class CardController {
         playerService.playerDeck().remove(0);
 
 
-        card2.setText(playerService.playerDeck().get(1).getName());
+        card2.setText(playerService.playerDeck().get(0).getName());
         //cardService.addToDiscardDeck(playerService.playerDeck().get(1));
-        playerService.playerDeck().remove(1);
+        playerService.playerDeck().remove(0);
 
 
-        card3.setText(playerService.playerDeck().get(2).getName());
+        card3.setText(playerService.playerDeck().get(0).getName());
         //cardService.addToDiscardDeck(playerService.playerDeck().get(2));
-        playerService.playerDeck().remove(2);
+        playerService.playerDeck().remove(0);
 
 
-        card4.setText(playerService.playerDeck().get(3).getName());
+        card4.setText(playerService.playerDeck().get(0).getName());
         //cardService.addToDiscardDeck(playerService.playerDeck().get(3));
-        playerService.playerDeck().remove(3);
+        playerService.playerDeck().remove(0);
 
     }
 

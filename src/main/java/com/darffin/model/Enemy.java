@@ -6,6 +6,7 @@ import java.util.List;
 public class Enemy {
     private int life;
     private String name;
+
     private List<String> enemyIntention = new ArrayList<String>();
     private List<Integer> intentionValue = new ArrayList<Integer>();
     private static Enemy enemy;
@@ -62,4 +63,6 @@ public class Enemy {
     public void setEnemyIntention(List<String> enemyIntention) {
         this.enemyIntention = enemyIntention;
     }
+
+
 }
