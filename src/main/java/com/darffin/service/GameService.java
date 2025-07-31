@@ -8,8 +8,24 @@ import org.springframework.stereotype.Service;
 public class GameService {
 
     private int mana;
+    private int burn = 0;
+    private int poison = 0;
 
     private final Player player = Player.getInstance();
+
+    @Autowired
+    private EnemyService enemyService;
+
+    public void applyGameEffect(String enemyTurnStage){
+
+        if(enemyTurnStage.equals("end")) { // Only after Enemy move
+            if (burn > 0) {
+                enemyService.damageEnemy(this.burn);
+                burn--;
+            }
+        }
+
+    }
 
     public int getMana() {
         return mana;
@@ -21,5 +37,21 @@ public class GameService {
 
     public void reloadMana(){
         this.mana = player.getMana();
+    }
+
+    public int getBurn() {
+        return burn;
+    }
+
+    public void setBurn(int burn) {
+        this.burn = burn;
+    }
+
+    public int getPoison() {
+        return poison;
+    }
+
+    public void setPoison(int poison) {
+        this.poison = poison;
     }
 }
