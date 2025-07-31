@@ -284,7 +284,6 @@ public class FightController {
                 try { this.victory();}
                 catch (IOException e) { throw new RuntimeException(e); }
             });
-            playerProgressService.saveProgress(playerService.getPlayer());
             result.setVisible(true);
             result.setText("Victory!");
         }
@@ -292,6 +291,15 @@ public class FightController {
     }
 
     public void victory() throws IOException {
+        playerService.playerDeck().addAll(cardService.getDiscardDeck());
+        cardService.getDiscardDeck().clear();       // Brazilian Gambiarra (temporary)
+        playerService.playerDeck().add(cardService.getCardByName(card1.getText()));
+        playerService.playerDeck().add(cardService.getCardByName(card2.getText()));
+        playerService.playerDeck().add(cardService.getCardByName(card3.getText()));
+        playerService.playerDeck().add(cardService.getCardByName(card4.getText()));
+        for(Card a : playerService.playerDeck()){ System.out.println(a.getName());}
+        playerProgressService.saveProgress(playerService.getPlayer());
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
         fxmlLoader.setControllerFactory(context::getBean); // Aqui a mágica acontece
         Parent map = fxmlLoader.load();

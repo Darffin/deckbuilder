@@ -1,6 +1,8 @@
 package com.darffin.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,8 @@ public class Player {
 
     private String lastNodeId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "player_deck",
             joinColumns = @JoinColumn(name = "player_id"),

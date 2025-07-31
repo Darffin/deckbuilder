@@ -59,11 +59,11 @@ public class MainMenuController {
     }
     @FXML
     private void continueGame() throws IOException{
+        playerProgressService.loadPlayer(playerProgressService.getProgress());
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
         fxmlLoader.setControllerFactory(context::getBean);
         Parent map = fxmlLoader.load();
-
-        playerProgressService.loadPlayer(playerProgressService.getProgress());
 
         Stage stage = (Stage) newGame.getScene().getWindow();
         Scene scene = new Scene(map);

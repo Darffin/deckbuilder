@@ -2,6 +2,7 @@ package com.darffin.service;
 
 import com.darffin.model.Player;
 import com.darffin.repository.PlayerProgressRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class PlayerProgressService {
     private PlayerProgressRepository progressRepository;
 
     private Player player = Player.getInstance();
+
 
     public Player getProgress() {
         return progressRepository.findById(1L).orElseGet(() -> {
@@ -24,6 +26,7 @@ public class PlayerProgressService {
         player.setLife(progress.getLife());
         player.setMana(progress.getMana());
         player.setGold(progress.getGold());
+        player.setDeckPlayer(progress.getDeckPlayer());
         //player.setShield(progress.getShield());
         //player.setStrength(progress.getStrength());
     }
