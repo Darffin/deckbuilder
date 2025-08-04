@@ -36,6 +36,7 @@ public class CardController {
         Collections.shuffle(playerService.playerDeck());
 
         card1.setText(playerService.playerDeck().get(0).getName());
+
         //cardService.addToDiscardDeck(playerService.playerDeck().get(0));
         playerService.playerDeck().remove(0);
 

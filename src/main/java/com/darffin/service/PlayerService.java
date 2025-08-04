@@ -22,7 +22,8 @@ public class PlayerService {
         player.setLife(60);
         player.setMana(6);
         player.setGold(40);
-        player.setDeckPlayer(cardService.lunaDefaultDeck());
+        //player.setDeckPlayer(cardService.lunaDefaultDeck());
+        player.setDeckPlayer(cardService.allCardsDeck());
     }
 
     public void Solano(){

@@ -27,6 +27,8 @@ public class CardService {
         return cardRepository.findByName(name);
     }
 
+    public List<Card> allCardsDeck(){ return getAllCards(); }
+
     public List<Card> defaultDeck(){
         List<Card> deck = new ArrayList<Card>();
         //deck = this.getAllCards();

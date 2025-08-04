@@ -27,6 +27,42 @@ public class Enemy {
         this.enemyIntention.add("atk"); this.intentionValue.add(8);
     }
 
+    public void MoonGhost(){
+        this.life = 90;
+        this.name = "Moon Ghost";
+
+        this.enemyIntention.add("wait"); this.intentionValue.add(1);
+        this.enemyIntention.add("wait"); this.intentionValue.add(1);
+        this.enemyIntention.add("heavyAtk"); this.intentionValue.add(18);
+        this.enemyIntention.add("heavyAtk"); this.intentionValue.add(18);
+        this.enemyIntention.add("wait"); this.intentionValue.add(1);
+        this.enemyIntention.add("wait"); this.intentionValue.add(8);
+    }
+
+    public void SunLancer(){
+        this.life = 150;
+        this.name = "Sun Lancer";
+
+        this.enemyIntention.add("atk"); this.intentionValue.add(8);
+        this.enemyIntention.add("atk"); this.intentionValue.add(15);
+        this.enemyIntention.add("atk"); this.intentionValue.add(1);
+        this.enemyIntention.add("atk"); this.intentionValue.add(15);
+        this.enemyIntention.add("wait"); this.intentionValue.add(1);
+        this.enemyIntention.add("heavyAtk"); this.intentionValue.add(8);
+    }
+
+    public void DwarfForest(){
+        this.life = 90;
+        this.name = "Dwarf Forest";
+
+        this.enemyIntention.add("atk"); this.intentionValue.add(4);
+        this.enemyIntention.add("atk"); this.intentionValue.add(6);
+        this.enemyIntention.add("atk"); this.intentionValue.add(10);
+        this.enemyIntention.add("atk"); this.intentionValue.add(12);
+        this.enemyIntention.add("atk"); this.intentionValue.add(15);
+        this.enemyIntention.add("wait"); this.intentionValue.add(1);
+    }
+
     public static Enemy getEnemyInstance(){
         if (enemy == null) enemy = new Enemy();
         return enemy;

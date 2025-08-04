@@ -125,7 +125,6 @@ public class MapController {
         }
     }
 
-
     public void loadStore(ActionEvent event) throws IOException {
         Button clickedButton = (Button) event.getSource();
         String nodeId = clickedButton.getId();
