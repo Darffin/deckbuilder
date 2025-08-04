@@ -134,7 +134,7 @@ public class FightController {
                 cardService.addToDiscardDeck(selectedCard);
 
                 gameService.setMana(gameService.getMana() - 1);
-                //playerService.verifyDeckAvailability();
+                playerService.verifyDeckAvailability();
 
                 clickedButton.setText(playerService.playerDeck().get(0).getName());
                 resizeFontCard(clickedButton);

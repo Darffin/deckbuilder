@@ -87,6 +87,10 @@ public class PlayerService {
         player.setGold(player.getGold() - gold);
     }
 
+    public void earnGold(int gold){
+        player.setGold(player.getGold() + gold);
+    }
+
     public void setPlayerMana(int e){
         this.player.setMana(e);
     }

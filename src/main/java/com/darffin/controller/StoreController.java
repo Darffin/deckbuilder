@@ -111,6 +111,7 @@ public class StoreController {
             playerService.playerDeck().add(cardService.getCardByName(button.getId()));
             playerProgressService.saveProgress(playerService.getPlayer());
             button.setDisable(true);
+            button.setText("Obtained!");
             playerService.spendGold(cardService.getCardByName(button.getId()).getCost());
             playerGold.setText("Gold: " + playerService.playerGold());
         } else {

@@ -2,22 +2,70 @@ package com.darffin.service;
 
 import com.darffin.model.Card;
 import com.darffin.repository.CardRepository;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class CardService {
-    private List<Card> discardDeck = new ArrayList<Card>();
 
     @Autowired
     private CardRepository cardRepository;
 
+    private List<Card> discardDeck = new ArrayList<Card>();
+
+    List<Card> commons = new ArrayList<>();
+    List<Card> rares = new ArrayList<>();
+    List<Card> epics = new ArrayList<>();
+    List<Card> legendaries = new ArrayList<>();
+
+    public CardService(CardRepository cardRepository){
+        for (Card card : cardRepository.findAll()) {
+            switch (card.getRarity()) {
+                case "Common":
+                    commons.add(card);
+                    break;
+                case "Rare":
+                    rares.add(card);
+                    break;
+                case "Epic":
+                    epics.add(card);
+                    break;
+                case "Legendary":
+                    legendaries.add(card);
+                    break;
+            }
+        }
+    }
+
+
+    public Card getCardForChest(){
+        List<Card> possibleCards = new ArrayList<>();
+
+        possibleCards.addAll(getRandomCards(commons, 4));
+        possibleCards.addAll(getRandomCards(rares, 3));
+        possibleCards.addAll(getRandomCards(epics, 2));
+        possibleCards.addAll(getRandomCards(legendaries, 1));
+
+        int randomIndex = ThreadLocalRandom.current().nextInt(10);
+        return possibleCards.get(randomIndex);
+    }
+
+    public List<Card> getRandomCards(List<Card> source, int count) {
+        Collections.shuffle(source);
+        return source.subList(0, Math.min(count, source.size()));
+    }
+
     public void saveCard(Card card) {
         cardRepository.save(card);
     }
+
 
     public List<Card> getAllCards() {
         return cardRepository.findAll();
