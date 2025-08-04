@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -62,6 +64,10 @@ public class FightController {
     @FXML
     private Label effect2;
     @FXML
+    private Label enemyDebuff1;
+    @FXML
+    private Label enemyDebuff2;
+    @FXML
     private Button result;
 
     @Autowired
@@ -107,7 +113,7 @@ public class FightController {
         //playerService.setPlayerDeckDefault();
 
         cardController.cardButtonsUpdate(card1,card2,card3,card4);
-
+        resizeFontCard(card1); resizeFontCard(card2); resizeFontCard(card3); resizeFontCard(card4);
         updateLabel();
 
     }
@@ -131,6 +137,7 @@ public class FightController {
                 //playerService.verifyDeckAvailability();
 
                 clickedButton.setText(playerService.playerDeck().get(0).getName());
+                resizeFontCard(clickedButton);
                 playerService.playerDeck().remove(0);
 
                 playerService.verifyDeckAvailability();
@@ -151,6 +158,7 @@ public class FightController {
         playerMana.setText(gameService.getMana() +" / "+ playerService.playerMana());
         playerLife.setText(playerService.playerLife() + "");
         enemyLife.setText(enemyService.enemyLife() + "");
+
         verifyEffects();
     }
 
@@ -191,10 +199,10 @@ public class FightController {
                 new KeyFrame(Duration.seconds(1.5), e -> this.enemyMove()),
 
                 new KeyFrame(Duration.seconds(1.75), e -> { verifyMatchResult(); gameService.applyGameEffect("end"); updateLabel();}),
-                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateLabel(); card1.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateLabel(); card2.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); updateLabel(); card3.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateLabel(); card4.setDisable(false);}),
+                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); resizeFontCard(card1); updateLabel(); card1.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); resizeFontCard(card2);updateLabel(); card2.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); resizeFontCard(card3); updateLabel(); card3.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); resizeFontCard(card4); updateLabel(); card4.setDisable(false);}),
 
                 new KeyFrame(Duration.seconds(2.75),  e -> updateEnemyState()),
                 new KeyFrame(Duration.seconds(2.75),  e -> { playerService.uploadPlayerEffects(); updateLabel(); }),
@@ -219,7 +227,7 @@ public class FightController {
     }
 
     public void verifyEffects(){
-        System.out.println("Shield: "+playerService.shield() +" Força:"+ playerService.strength());
+        System.out.println("Shield: "+playerService.shield() +" Strength:"+ playerService.strength());
         if((effect1.getText().matches("Shield.*"))&&(playerService.shield()<=0)){
             if(playerService.strength() > 0){
                 effect1.setText("Strength: "+playerService.strength());
@@ -230,7 +238,7 @@ public class FightController {
         if((effect1.getText().matches("Strength.*"))&&(playerService.strength()<=0)){
             if(playerService.shield() > 0){
                 effect1.setText("Shield: "+playerService.shield());
-            } effect1.setText("");
+            } else effect1.setText("");
         }
 
         if(((effect2.getText().matches("Shield.*"))&&(playerService.shield()<=0)) || ((effect2.getText().matches("Strength.*"))&&(playerService.strength()<=0))){
@@ -247,6 +255,38 @@ public class FightController {
             if(effect1.getText().isEmpty() || effect1.getText().matches("Strength.*")){
                 effect1.setText("Strength: " + playerService.strength());
             } else effect2.setText("Strength: " + playerService.strength());
+        }
+
+        // --
+
+        System.out.println("Enemy poison: "+gameService.getPoison() +" Enemy burn:"+ gameService.getBurn());
+        if((enemyDebuff1.getText().matches("Poison.*"))&&(gameService.getPoison()<=0)){
+            if(gameService.getBurn() > 0){
+                enemyDebuff1.setText("Burn: " + gameService.getBurn());
+                enemyDebuff2.setText("");
+            } else enemyDebuff1.setText("");
+        }
+
+        if((enemyDebuff1.getText().matches("Burn.*"))&&(gameService.getBurn()<=0)){
+            if(gameService.getPoison() > 0){
+                enemyDebuff1.setText("Poison: "+gameService.getPoison());
+            } else enemyDebuff1.setText("");
+        }
+
+        if(((enemyDebuff2.getText().matches("Poison.*"))&&(gameService.getPoison()<=0)) || ((enemyDebuff2.getText().matches("Burn.*"))&&(gameService.getBurn()<=0))){
+            enemyDebuff2.setText("");
+        }
+
+        if(gameService.getPoison() > 0){
+            if(enemyDebuff1.getText().isEmpty() || enemyDebuff1.getText().matches("Poison.*")){
+                enemyDebuff1.setText("Poison: "+gameService.getPoison());
+            } else enemyDebuff2.setText("Poison: "+gameService.getPoison());
+        }
+
+        if(gameService.getBurn() > 0){
+            if(enemyDebuff1.getText().isEmpty() || enemyDebuff1.getText().matches("Burn.*")){
+                enemyDebuff1.setText("Burn: " + gameService.getBurn());
+            } else enemyDebuff2.setText("Burn: " + gameService.getBurn());
         }
 
 
@@ -319,7 +359,51 @@ public class FightController {
         stage.setScene(scene);
     }
 
+    public void resizeFontCard(Button cardBtn) {
+        double maxWidth = 100;
+        double fontSize = 13;
 
+        String[] words = cardBtn.getText().split("\\s+");
+        System.out.println();
+        Text tempText = new Text();
+        double maxWordWidth = 0;
+
+        // Encontrar a maior largura de palavra
+        for (String word : words) {
+            System.out.println(word);
+            tempText.setFont(new Font(fontSize));
+            tempText.setText(word);
+            tempText.applyCss(); // Força o cálculo do estilo
+
+            double width = tempText.getLayoutBounds().getWidth()+18;
+            System.out.println("Word width: "+width);
+            if (width > maxWordWidth) {
+                maxWordWidth = width;
+            }
+        }
+
+        // Reduz a fonte até caber ou atingir o mínimo
+        while (maxWordWidth > maxWidth && fontSize > 6) {
+            fontSize -= 1;
+            maxWordWidth = 0;
+            for (String word : words) {
+                tempText.setFont(new Font(fontSize));
+                tempText.setText(word);
+                tempText.applyCss();
+
+                double width = tempText.getLayoutBounds().getWidth()+18;
+                System.out.println("Word new width: " + word +" - " +width);
+                if (width > maxWordWidth) {
+                    maxWordWidth = width;
+                }
+            }
+        }
+
+        cardBtn.setFont(new Font(fontSize));
+        tempText.setText(cardBtn.getText().replaceAll("\\s+",""));
+        if(tempText.getLayoutBounds().getWidth() > maxWidth) cardBtn.setWrapText(true);
+
+    }
 
 
 
