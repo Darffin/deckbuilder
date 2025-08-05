@@ -361,7 +361,7 @@ public class FightController {
 
     public void resizeFontCard(Button cardBtn) {
         double maxWidth = 100;
-        double fontSize = 13;
+        double fontSize = 11;
 
         String[] words = cardBtn.getText().split("\\s+");
         System.out.println();
@@ -401,7 +401,7 @@ public class FightController {
 
         cardBtn.setFont(new Font(fontSize));
         tempText.setText(cardBtn.getText().replaceAll("\\s+",""));
-        if(tempText.getLayoutBounds().getWidth() > maxWidth) cardBtn.setWrapText(true);
+        if(tempText.getLayoutBounds().getWidth()+20 > maxWidth) cardBtn.setWrapText(true);
 
     }
 

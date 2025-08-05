@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class StoreController {
     @FXML
     private Button buyAbility1, buyAbility2;
     @FXML
-    private Button buyDeleteCard;
+    private Button deleteCard;
 
     @Autowired
     private CardService cardService;
@@ -98,6 +100,7 @@ public class StoreController {
         labelBuyCard2.setText(possibleCard2.get(randomIndex).getName()); buyCard2.setId(possibleCard2.get(randomIndex).getName());
         randomIndex = ThreadLocalRandom.current().nextInt(10);
         labelBuyCard3.setText(possibleCard3.get(randomIndex).getName()); buyCard3.setId(possibleCard3.get(randomIndex).getName());
+        playerProgressService.saveProgress(playerService.getPlayer());
     }
 
     public List<Card> getRandomCards(List<Card> source, int count) {
@@ -115,20 +118,64 @@ public class StoreController {
             playerService.spendGold(cardService.getCardByName(button.getId()).getCost());
             playerGold.setText("Gold: " + playerService.playerGold());
         } else {
-            Timeline notEnoughGold = new Timeline(
-                    new KeyFrame(Duration.seconds(0), e -> {button.setTextFill(Color.RED); button.setText("Not enough gold!");}),
-                    new KeyFrame(Duration.seconds(0.25), e -> button.setTextFill(Color.BLACK)),
-                    new KeyFrame(Duration.seconds(0.5),  e -> button.setTextFill(Color.RED)),
-                    new KeyFrame(Duration.seconds(0.75), e -> button.setTextFill(Color.BLACK)),
-                    new KeyFrame(Duration.seconds(1),  e -> button.setTextFill(Color.RED)),
-                    new KeyFrame(Duration.seconds(1.25), e -> {button.setTextFill(Color.BLACK); button.setText("Buy");})
-            );
-            notEnoughGold.play();
+            notEnoughGold(button);
         }
     }
 
     public void buyEraseCard(){
         // Only when pop-ups like components are implemented [Soon]
+        if(playerService.playerDeck().size() > 6) {
+            if (playerService.playerGold() >= 25) {
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/DeleteCard.fxml"));
+                    loader.setControllerFactory(context::getBean);
+                    Parent root = loader.load();
+
+                    DeleteCardController controller = loader.getController();
+                    deleteCard.setDisable(true);
+                    deleteCard.setText("Used!");
+                    playerService.spendGold(25);
+
+                    Stage popupStage = new Stage();
+                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                    popupStage.setTitle("Popup");
+                    popupStage.setScene(new Scene(root));
+
+                    controller.setStage(popupStage);
+
+                    popupStage.showAndWait();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else notEnoughGold(deleteCard);
+        }else minimumCardsAlready(deleteCard);
+
+    }
+
+    public void minimumCardsAlready(Button button){
+        Timeline minimumCardsAlready = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> {button.setTextFill(Color.RED); button.setFont(new Font(11)); button.setText("You can't have less than 6 cards!");}),
+                new KeyFrame(Duration.seconds(0.25), e -> button.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(0.5),  e -> button.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(0.75), e -> button.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(1),  e -> button.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(1.25), e -> {button.setTextFill(Color.BLACK); button.setFont(new Font(13)); button.setText("Buy");})
+        );
+        minimumCardsAlready.play();
+    }
+
+    public void notEnoughGold(Button button){
+        Timeline notEnoughGold = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> {button.setTextFill(Color.RED); button.setText("Not enough gold!");}),
+                new KeyFrame(Duration.seconds(0.25), e -> button.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(0.5),  e -> button.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(0.75), e -> button.setTextFill(Color.BLACK)),
+                new KeyFrame(Duration.seconds(1),  e -> button.setTextFill(Color.RED)),
+                new KeyFrame(Duration.seconds(1.25), e -> {button.setTextFill(Color.BLACK); button.setText("Buy");})
+        );
+        notEnoughGold.play();
     }
 
 
