@@ -22,6 +22,8 @@ public class PlayerClassController {
     private Button lunaBtn;
     @FXML
     private Button solanoBtn;
+    @FXML
+    private Button discipleBtn;
 
     @Autowired
     private PlayerService playerService;
@@ -50,6 +52,19 @@ public class PlayerClassController {
         playerProgressService.saveProgress(playerService.getPlayer());
 
         Stage stage = (Stage) lunaBtn.getScene().getWindow();
+        Scene scene = new Scene(map);
+        stage.setScene(scene);
+    }
+
+    public void chooseDisciple() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/Map.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent map = fxmlLoader.load();
+
+        playerService.Disciple();
+        playerProgressService.saveProgress(playerService.getPlayer());
+
+        Stage stage = (Stage) discipleBtn.getScene().getWindow();
         Scene scene = new Scene(map);
         stage.setScene(scene);
     }

@@ -22,8 +22,14 @@ public class PlayerService {
         player.setLife(60);
         player.setMana(6);
         player.setGold(40);
-        //player.setDeckPlayer(cardService.lunaDefaultDeck());
-        player.setDeckPlayer(cardService.allCardsDeck());
+        player.setDeckPlayer(cardService.lunaDefaultDeck());
+    }
+
+    public void Disciple(){
+        player.setLife(50);
+        player.setMana(6); // Just for test
+        player.setGold(200); // ==
+        player.setDeckPlayer(cardService.allCardsDeck()); // ==
     }
 
     public void Solano(){
@@ -73,6 +79,11 @@ public class PlayerService {
             Collections.shuffle(playerDeck());
             cardService.getDiscardDeck().clear();
         }
+    }
+
+    public void resetEffects(){
+        player.setShield(0);
+        player.setStrength(0);
     }
 
     public int playerMana(){
