@@ -34,13 +34,9 @@ public class FightController {
     private ApplicationContext context;
 
     @FXML
-    private Button card1;
+    private Button card1, card2, card3, card4;
     @FXML
-    private Button card2;
-    @FXML
-    private Button card3;
-    @FXML
-    private Button card4;
+    private Label card1Effect, card2Effect, card3Effect, card4Effect;
     @FXML
     private Label playerLife;
     @FXML
@@ -68,7 +64,8 @@ public class FightController {
     @FXML
     private Label enemyDebuff2;
     @FXML
-    private Button result;
+    private Button result, menu;
+
 
     @Autowired
     private PlayerController playerController;
@@ -113,6 +110,7 @@ public class FightController {
         //playerService.setPlayerDeckDefault();
 
         cardController.cardButtonsUpdate(card1,card2,card3,card4);
+        updateCardLabels();
         resizeFontCard(card1); resizeFontCard(card2); resizeFontCard(card3); resizeFontCard(card4);
         updateLabel();
 
@@ -137,6 +135,7 @@ public class FightController {
                 playerService.verifyDeckAvailability();
 
                 clickedButton.setText(playerService.playerDeck().get(0).getName());
+                updateCardLabels();
                 resizeFontCard(clickedButton);
                 playerService.playerDeck().remove(0);
 
@@ -187,22 +186,22 @@ public class FightController {
                 new KeyFrame(Duration.seconds(0), e -> endTurn.setDisable(true)),
 
                 new KeyFrame(Duration.seconds(0.25), e -> card1.setDisable(true)),
-                new KeyFrame(Duration.seconds(0.25), e -> { cardController.cardButtonUnload(card1); updateLabel();}),
+                new KeyFrame(Duration.seconds(0.25), e -> { cardController.cardButtonUnload(card1); card1Effect.setText(""); updateLabel();}),
                 new KeyFrame(Duration.seconds(0.5), e -> card2.setDisable(true)),
-                new KeyFrame(Duration.seconds(0.5), e -> { cardController.cardButtonUnload(card2); updateLabel();}),
+                new KeyFrame(Duration.seconds(0.5), e -> { cardController.cardButtonUnload(card2); card2Effect.setText(""); updateLabel();}),
                 new KeyFrame(Duration.seconds(0.75), e -> card3.setDisable(true)),
-                new KeyFrame(Duration.seconds(0.75), e -> { cardController.cardButtonUnload(card3); updateLabel();}),
+                new KeyFrame(Duration.seconds(0.75), e -> { cardController.cardButtonUnload(card3); card3Effect.setText(""); updateLabel();}),
                 new KeyFrame(Duration.seconds(1), e -> card4.setDisable(true)),
-                new KeyFrame(Duration.seconds(1), e -> { cardController.cardButtonUnload(card4); updateLabel();}),
+                new KeyFrame(Duration.seconds(1), e -> { cardController.cardButtonUnload(card4); card4Effect.setText(""); updateLabel();}),
                 new KeyFrame(Duration.seconds(1.25), e -> { gameService.applyGameEffect("start"); updateLabel();}), // add poison and strength later
 
                 new KeyFrame(Duration.seconds(1.5), e -> this.enemyMove()),
 
                 new KeyFrame(Duration.seconds(1.75), e -> { verifyMatchResult(); gameService.applyGameEffect("end"); updateLabel();}),
-                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); resizeFontCard(card1); updateLabel(); card1.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); resizeFontCard(card2);updateLabel(); card2.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); resizeFontCard(card3); updateLabel(); card3.setDisable(false);}),
-                new KeyFrame(Duration.seconds(2.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); resizeFontCard(card4); updateLabel(); card4.setDisable(false);}),
+                new KeyFrame(Duration.seconds(1.75), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card1); updateCardLabel(card1, card1Effect); resizeFontCard(card1); updateLabel(); card1.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card2); updateCardLabel(card2, card2Effect); resizeFontCard(card2);updateLabel(); card2.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.25), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card3); updateCardLabel(card3, card3Effect); resizeFontCard(card3); updateLabel(); card3.setDisable(false);}),
+                new KeyFrame(Duration.seconds(2.5), e -> { playerService.verifyDeckAvailability(); cardController.cardButtonLoad(card4); updateCardLabel(card4, card4Effect); resizeFontCard(card4); updateLabel(); card4.setDisable(false);}),
 
                 new KeyFrame(Duration.seconds(2.75),  e -> updateEnemyState()),
                 new KeyFrame(Duration.seconds(2.75),  e -> { playerService.uploadPlayerEffects(); updateLabel(); }),
@@ -224,6 +223,17 @@ public class FightController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateCardLabels(){
+        card1Effect.setText(cardService.getCardByName(card1.getText()).getEffect());
+        card2Effect.setText(cardService.getCardByName(card2.getText()).getEffect());
+        card3Effect.setText(cardService.getCardByName(card3.getText()).getEffect());
+        card4Effect.setText(cardService.getCardByName(card4.getText()).getEffect());
+    }
+
+    public void updateCardLabel(Button card, Label cardEffect){
+        cardEffect.setText(cardService.getCardByName(card.getText()).getEffect());
     }
 
     public void verifyEffects(){
@@ -270,6 +280,7 @@ public class FightController {
         if((enemyDebuff1.getText().matches("Burn.*"))&&(gameService.getBurn()<=0)){
             if(gameService.getPoison() > 0){
                 enemyDebuff1.setText("Poison: "+gameService.getPoison());
+                enemyDebuff2.setText("");
             } else enemyDebuff1.setText("");
         }
 
@@ -405,6 +416,25 @@ public class FightController {
 
     }
 
+    public void resetGame(){
+        cardService.getDiscardDeck().clear();
+        playerService.resetEffects();
+        gameService.resetEffects();
+        enemyService.setMoveControl(0);
+    }
 
+    public void loadMenu(ActionEvent event) throws IOException {
+        Button clickedButton = (Button) event.getSource();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/MainMenu.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent menu = fxmlLoader.load();
+
+        resetGame();
+
+        Stage stage = (Stage) clickedButton.getScene().getWindow();
+        Scene scene = new Scene(menu);
+        stage.setScene(scene);
+    }
 
 }
