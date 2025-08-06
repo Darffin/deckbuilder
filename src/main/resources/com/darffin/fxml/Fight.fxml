@@ -34,5 +34,22 @@
       <Button fx:id="result" alignment="CENTER" contentDisplay="CENTER" layoutX="410.0" layoutY="365.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="86.0" textAlignment="CENTER" visible="false" />
       <Label fx:id="enemyDebuff1" layoutX="389.0" layoutY="139.0" prefHeight="40.0" prefWidth="90.0" />
       <Label fx:id="enemyDebuff2" layoutX="389.0" layoutY="190.0" prefHeight="40.0" prefWidth="90.0" />
+      <Button fx:id="menu" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#loadMenu" prefHeight="55.0" prefWidth="55.0" text="Menu" />
+      <Label fx:id="card1Effect" alignment="TOP_CENTER" layoutX="93.0" layoutY="600.0" mouseTransparent="true" prefHeight="95.0" prefWidth="86.0" text="Label" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label fx:id="card2Effect" alignment="TOP_CENTER" layoutX="203.0" layoutY="600.0" mouseTransparent="true" prefHeight="95.0" prefWidth="86.0" text="Label" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label fx:id="card3Effect" alignment="TOP_CENTER" layoutX="313.0" layoutY="600.0" mouseTransparent="true" prefHeight="95.0" prefWidth="86.0" text="Label" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+      <Label fx:id="card4Effect" alignment="TOP_CENTER" layoutX="423.0" layoutY="600.0" mouseTransparent="true" prefHeight="95.0" prefWidth="86.0" text="Label" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
    </children>
 </Pane>

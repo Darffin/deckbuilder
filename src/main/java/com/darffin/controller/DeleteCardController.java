@@ -7,6 +7,7 @@ import com.darffin.service.PlayerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,7 +22,11 @@ public class DeleteCardController {
     @FXML
     private Button card1, card2, card3, card4, card5, card6, card7, card8;
     @FXML
+    private Label card1Effect, card2Effect, card3Effect, card4Effect, card5Effect, card6Effect, card7Effect, card8Effect;
+    @FXML
     private Button btnPrevious, btnNext;
+    @FXML
+    private Label previousCount, nextCount;
 
     @Autowired
     private PlayerService playerService;
@@ -47,65 +52,82 @@ public class DeleteCardController {
         allPlayerCards.clear();
         if(nextCards.isEmpty()) btnNext.setDisable(true);
         btnPrevious.setDisable(true);
+
+        updateLabel();
+    }
+
+    public void updateLabel(){
+        previousCount.setText(previousCards.size()+" / "+playerService.playerDeck().size());
+        nextCount.setText(nextCards.size()+" / "+playerService.playerDeck().size());
     }
 
     public void loadCards(List<Card> cards){
-        if(verifyIfNull(card1, cards)) {
+        if(verifyIfNull(card1, card1Effect, cards)) {
             card1.setText(cards.get(0).getName());
+            card1Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card1);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card2, cards)) {
+        if(verifyIfNull(card2, card2Effect, cards)) {
             card2.setText(cards.get(0).getName());
+            card2Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card2);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card3, cards)) {
+        if(verifyIfNull(card3, card3Effect, cards)) {
             card3.setText(cards.get(0).getName());
+            card3Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card3);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card4, cards)) {
+        if(verifyIfNull(card4, card4Effect, cards)) {
             card4.setText(cards.get(0).getName());
+            card4Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card4);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card5, cards)) {
+        if(verifyIfNull(card5, card5Effect, cards)) {
             card5.setText(cards.get(0).getName());
+            card5Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card5);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card6, cards)) {
+        if(verifyIfNull(card6, card6Effect, cards)) {
             card6.setText(cards.get(0).getName());
+            card6Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card6);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card7, cards)) {
+        if(verifyIfNull(card7, card7Effect, cards)) {
             card7.setText(cards.get(0).getName());
+            card7Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card7);
             cards.remove(0);
         }
 
-        if(verifyIfNull(card8, cards)) {
+        if(verifyIfNull(card8, card8Effect, cards)) {
             card8.setText(cards.get(0).getName());
+            card8Effect.setText(cards.get(0).getEffect());
             resizeFontCard(card8);
             cards.remove(0);
         }
 
     }
 
-    public boolean verifyIfNull(Button n, List<Card> c){
+    public boolean verifyIfNull(Button n, Label l, List<Card> c){
         if(!c.isEmpty()){
             n.setVisible(true);
             return true;
         }
-        n.setText(""); n.setVisible(false);
+        l.setText("");
+        n.setText("");
+        n.setVisible(false);
         return false;
     }
 
@@ -126,6 +148,7 @@ public class DeleteCardController {
         loadCards(previousCards);
         if(previousCards.isEmpty()) btnPrevious.setDisable(true);
         if(!nextCards.isEmpty()) btnNext.setDisable(false);
+        updateLabel();
     }
 
     public void nextCards(){
@@ -134,6 +157,7 @@ public class DeleteCardController {
         loadCards(nextCards);
         if(nextCards.isEmpty()) btnNext.setDisable(true);
         if(!previousCards.isEmpty()) btnPrevious.setDisable(false);
+        updateLabel();
     }
 
     public void deleteCard(ActionEvent e){
