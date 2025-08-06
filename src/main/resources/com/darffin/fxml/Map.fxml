@@ -14,7 +14,7 @@
          </image></ImageView>
       <Canvas height="730.0" width="600.0" />
       <Button id="1_1" fx:id="btn1Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="550.0" mnemonicParsing="false" onAction="#loadStore" prefHeight="55.0" prefWidth="55.0" text="Store" textAlignment="CENTER" />
-      <Button id="1_4" fx:id="btn4Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="461.0" layoutY="550.0" mnemonicParsing="false" onAction="#loadChest" prefHeight="55.0" prefWidth="55.0" text="Chest(T)" textAlignment="CENTER">
+      <Button id="1_4" fx:id="btn4Lv1" alignment="CENTER" contentDisplay="CENTER" layoutX="461.0" layoutY="550.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Enemy" textAlignment="CENTER">
          <font>
             <Font size="10.0" />
          </font></Button>
@@ -56,10 +56,11 @@
             <Font size="11.0" />
          </font></Button>
       <Button id="4_4" fx:id="btn4Lv4" alignment="CENTER" contentDisplay="CENTER" layoutX="385.0" layoutY="158.0" mnemonicParsing="false" onAction="#loadStore" prefHeight="55.0" prefWidth="55.0" text="Store" textAlignment="CENTER" />
-      <Button id="4_5" fx:id="btn5Lv4" alignment="CENTER" contentDisplay="CENTER" layoutX="478.0" layoutY="158.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Enemy" textAlignment="CENTER">
+      <Button id="4_5" fx:id="btn5Lv4" alignment="CENTER" contentDisplay="CENTER" layoutX="489.0" layoutY="158.0" mnemonicParsing="false" onAction="#loadFight" prefHeight="55.0" prefWidth="55.0" text="Enemy" textAlignment="CENTER">
          <font>
             <Font size="11.0" />
          </font></Button>
       <Button id="boss" fx:id="boss" alignment="CENTER" contentDisplay="CENTER" layoutX="274.0" layoutY="32.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" text="Boss" textAlignment="CENTER" />
+      <Button fx:id="menu" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#loadMenu" prefHeight="55.0" prefWidth="55.0" text="Menu" />
    </children>
 </Pane>

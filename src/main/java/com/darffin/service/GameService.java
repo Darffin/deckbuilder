@@ -27,6 +27,12 @@ public class GameService {
 
     }
 
+    public void resetEffects(){
+        this.burn = 0;
+        this.poison = 0;
+
+    }
+
     public int getMana() {
         return mana;
     }

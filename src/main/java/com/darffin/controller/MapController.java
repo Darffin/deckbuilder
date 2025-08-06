@@ -53,6 +53,9 @@ public class MapController {
     @FXML
     private Button boss;
 
+    @FXML
+    private Button menu;
+
     private Map<String, MapNode> map = new HashMap<>(); // In future updates, remove interaction between controller and model(MapNode)
     @Autowired
     private PlayerProgressService playerProgressService;
@@ -192,12 +195,19 @@ public class MapController {
         Scene scene = new Scene(fight);
         stage.setScene(scene);
 
-
-
-
     }
 
+    public void loadMenu(ActionEvent event) throws IOException {
+        Button clickedButton = (Button) event.getSource();
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/darffin/fxml/MainMenu.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent menu = fxmlLoader.load();
+
+        Stage stage = (Stage) clickedButton.getScene().getWindow();
+        Scene scene = new Scene(menu);
+        stage.setScene(scene);
+    }
 
 
 
