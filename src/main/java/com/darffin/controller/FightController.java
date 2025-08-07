@@ -128,6 +128,7 @@ public class FightController {
                 enemyLife.setText(enemyService.enemyLife() + "");
 
                 verifyMatchResult();
+                verifyEffects();
 
                 cardService.addToDiscardDeck(selectedCard);
 
@@ -237,70 +238,65 @@ public class FightController {
     }
 
     public void verifyEffects(){
-        System.out.println("Shield: "+playerService.shield() +" Strength:"+ playerService.strength());
-        if((effect1.getText().matches("Shield.*"))&&(playerService.shield()<=0)){
-            if(playerService.strength() > 0){
-                effect1.setText("Strength: "+playerService.strength());
-                effect2.setText("");
-            } else effect1.setText("");
-        }
-
-        if((effect1.getText().matches("Strength.*"))&&(playerService.strength()<=0)){
-            if(playerService.shield() > 0){
-                effect1.setText("Shield: "+playerService.shield());
-            } else effect1.setText("");
-        }
-
-        if(((effect2.getText().matches("Shield.*"))&&(playerService.shield()<=0)) || ((effect2.getText().matches("Strength.*"))&&(playerService.strength()<=0))){
-            effect2.setText("");
-        }
-
-        if(playerService.shield() > 0){
-            if(effect1.getText().isEmpty() || effect1.getText().matches("Shield.*")){
-                effect1.setText("Shield: "+playerService.shield());
-            } else effect2.setText("Shield: "+playerService.shield());
-        }
-
-        if(playerService.strength() > 0){
-            if(effect1.getText().isEmpty() || effect1.getText().matches("Strength.*")){
-                effect1.setText("Strength: " + playerService.strength());
-            } else effect2.setText("Strength: " + playerService.strength());
-        }
+        if (playerService.shield()<=0) endedEffect("Shield");
+        else startedEffect("Shield");
+        if (playerService.strength()<=0) endedEffect("Strength");
+        else startedEffect("Strength");
 
         // --
 
-        System.out.println("Enemy poison: "+gameService.getPoison() +" Enemy burn:"+ gameService.getBurn());
-        if((enemyDebuff1.getText().matches("Poison.*"))&&(gameService.getPoison()<=0)){
-            if(gameService.getBurn() > 0){
-                enemyDebuff1.setText("Burn: " + gameService.getBurn());
-                enemyDebuff2.setText("");
-            } else enemyDebuff1.setText("");
+        if (gameService.getBurn()<=0) endedEffect("Burn");
+        else startedEnemyDebuff("Burn");
+        if(gameService.getPoison()<=0) endedEffect("Poison");
+        else startedEnemyDebuff("Poison");
+    }
+
+    public void endedEffect(String effect){
+        if(effect1.getText().startsWith(effect)){
+            effect1.setText("");
         }
 
-        if((enemyDebuff1.getText().matches("Burn.*"))&&(gameService.getBurn()<=0)){
-            if(gameService.getPoison() > 0){
-                enemyDebuff1.setText("Poison: "+gameService.getPoison());
-                enemyDebuff2.setText("");
-            } else enemyDebuff1.setText("");
+        if(effect2.getText().startsWith(effect)){
+            effect2.setText("");
         }
 
-        if(((enemyDebuff2.getText().matches("Poison.*"))&&(gameService.getPoison()<=0)) || ((enemyDebuff2.getText().matches("Burn.*"))&&(gameService.getBurn()<=0))){
+        if(enemyDebuff1.getText().startsWith(effect)){
+            enemyDebuff1.setText("");
+        }
+
+        if(enemyDebuff2.getText().startsWith(effect)){
             enemyDebuff2.setText("");
         }
+    }
 
-        if(gameService.getPoison() > 0){
-            if(enemyDebuff1.getText().isEmpty() || enemyDebuff1.getText().matches("Poison.*")){
-                enemyDebuff1.setText("Poison: "+gameService.getPoison());
-            } else enemyDebuff2.setText("Poison: "+gameService.getPoison());
+    public void startedEffect(String effect){
+        if(effect1.getText().isEmpty() || effect1.getText().startsWith(effect)){
+            if(effect.equals("Shield")) effect1.setText("Shield: "+playerService.shield());
+            if(effect.equals("Strength")) effect1.setText("Strength: "+playerService.strength());
+            if(effect2.getText().startsWith(effect)) effect2.setText("");
+            return;
         }
 
-        if(gameService.getBurn() > 0){
-            if(enemyDebuff1.getText().isEmpty() || enemyDebuff1.getText().matches("Burn.*")){
-                enemyDebuff1.setText("Burn: " + gameService.getBurn());
-            } else enemyDebuff2.setText("Burn: " + gameService.getBurn());
+        if(effect2.getText().isEmpty() || effect2.getText().startsWith(effect)){
+            if(effect.equals("Shield")) effect2.setText("Shield: "+playerService.shield());
+            if(effect.equals("Strength")) effect2.setText("Strength: "+playerService.strength());
+        }
+    }
+
+    public void startedEnemyDebuff(String effect){
+        // Enemy
+
+        if(enemyDebuff1.getText().isEmpty() || enemyDebuff1.getText().startsWith(effect)){
+            if(effect.equals("Poison")) enemyDebuff1.setText("Poison: "+gameService.getPoison());
+            if(effect.equals("Burn")) enemyDebuff1.setText("Burn: "+gameService.getBurn());
+            if(enemyDebuff2.getText().startsWith(effect)) enemyDebuff2.setText("");
+            return;
         }
 
-
+        if(enemyDebuff2.getText().isEmpty() || enemyDebuff2.getText().startsWith(effect)){
+            if(effect.equals("Poison")) enemyDebuff2.setText("Poison: "+gameService.getPoison());
+            if(effect.equals("Burn")) enemyDebuff2.setText("Burn: "+gameService.getBurn());
+        }
     }
 
     public void updateEnemyState(){
