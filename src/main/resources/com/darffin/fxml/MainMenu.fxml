@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.darffin.controller.MainMenuController">
-      <Button fx:id="newGame" layoutX="195.0" layoutY="389.0" mnemonicParsing="false" onAction="#newGame" prefHeight="68.0" prefWidth="210.0" text="New Game" />
-      <Label id="deckbuilder" layoutX="155.0" layoutY="195.0" text="DeckBuilder">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.darffin.controller.MainMenuController">
+      <Button fx:id="newGame" layoutX="215.0" layoutY="389.0" mnemonicParsing="false" onAction="#newGame" prefHeight="68.0" prefWidth="210.0" text="New Game" />
+      <Label id="deckbuilder" layoutX="175.0" layoutY="195.0" text="DeckBuilder">
          <font>
             <Font name="UD Digi Kyokasho NP-B" size="48.0" />
          </font>
       </Label>
-      <Button fx:id="close" layoutX="195.0" layoutY="589.0" mnemonicParsing="false" onAction="#closeGame" prefHeight="68.0" prefWidth="210.0" text="Close" />
-   <Button fx:id="continueGame" layoutX="195.0" layoutY="489.0" mnemonicParsing="false" onAction="#continueGame" prefHeight="68.0" prefWidth="210.0" text="Continue" />
+      <Button fx:id="close" layoutX="215.0" layoutY="589.0" mnemonicParsing="false" onAction="#closeGame" prefHeight="68.0" prefWidth="210.0" text="Close" />
+   <Button fx:id="continueGame" layoutX="215.0" layoutY="489.0" mnemonicParsing="false" onAction="#continueGame" prefHeight="68.0" prefWidth="210.0" text="Continue" />
 </Pane>
